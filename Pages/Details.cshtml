@@ -1,0 +1,46 @@
+﻿@page "{id:int}"
+@using BetValue.Models
+@model BetValue.Pages.DetailsModel
+@{
+}
+
+
+<h3 class="text-center">@Model.League.Name</h3>
+<div class="row">
+    <div class="col-12 col-lg-4">
+        <div class="bigbox border bg-light" id="GameBox">
+        </div>
+        <table>       
+            <thead>
+                <th>Rank</th>
+                <th>Lag</th>
+                <th>Matcher</th>
+                <th>Goals</th>
+                <th>Poäng</th>
+            </thead>
+            <tbody>
+                @foreach(SerieMemberModel serieMember in Model.SerieToShow.SerieMembers){
+                    <tr class="border">
+                        <td>@serieMember.Rank</td>
+                        <td>@serieMember.Team.Name</td>
+                        <td>@serieMember.GamesPlayed</td>
+                        <td>@serieMember.GoalDiff</td>
+                        <td>@serieMember.Points</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+    <div class="col-12 col-lg-4">
+        @foreach (GameModel game in Model.ValueGames)
+        {
+            <p class="gameContainer border m-1 p-3" id=@game.Id>@Html.Raw($"{game.Serie.League.Name}<br />{game.Date.ToShortDateString()} | {game.HomeTeam.Name} - {game.AwayTeam.Name} <br /> Bet:{game.WhatBetHasValue} <br />Correct Odds: {game.CorrectOdds1} - {game.CorrectOddsX} - {game.CorrectOdds2} <br /> Actual Odds:{game.Odds1} - {game.OddsX} - {game.Odds2}<br />Value: {game.BetValue}")</p>
+        }
+    </div>
+    <div class="col-12 col-lg-4">
+        @foreach (GameModel game in Model.UnplayedGames)
+        {
+            <p class="gameContainer border bg-light m-1 p-3" id=@game.Id>@Html.Raw($"{game.Serie.League.Name}<br />{game.Date.ToShortDateString()} | {game.HomeTeam.Name} - {game.AwayTeam.Name}")</p>
+        }
+    </div>
+</div>

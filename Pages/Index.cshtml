@@ -1,0 +1,39 @@
+﻿@page
+@using BetValue.Models
+@model IndexModel
+@{
+    ViewData["Title"] = "Home page";
+}
+<div class="row">
+    <div class="col-12 col-md-4">
+
+    </div>
+    <div class="col-12 col-md-4">
+        <form>
+            <label for="inputValue">Value above:</label>
+            <input type="text" id="inputValue" asp-for="Value" class="w-25 border"/>
+            <input type="submit" value="Räkna om" class="btn btn-outline-primary border"/>
+        </form>
+    </div>
+    <div class="col-12 col-md-4">
+    </div>
+</div>
+<div class="row">
+    <div class="col-12 col-md-4">          
+        <div class="bigbox border bg-light" id="GameBox">
+        </div>
+    </div>
+    <div class="col-12 col-md-4">
+        @foreach (GameModel game in Model.ValueGames)
+        {            
+            <p class="gameContainer border m-1 p-3" id=@game.Id>@Html.Raw($"{game.Serie.League.Name}<br />{game.Date.ToShortDateString()} | {game.HomeTeam.Name} - {game.AwayTeam.Name} <br /> Bet:{game.WhatBetHasValue} <br />Correct Odds: {game.CorrectOdds1} - {game.CorrectOddsX} - {game.CorrectOdds2} <br /> Actual Odds:{game.Odds1} - {game.OddsX} - {game.Odds2}<br />Value: {game.BetValue}")</p>
+        }
+    </div>
+    <div class="col-12 col-md-4">
+        @foreach (GameModel game in Model.UnplayedGames)
+        {
+            <p class="gameContainer border bg-light m-1 p-3" id=@game.Id>@Html.Raw($"{game.Serie.League.Name}<br />{game.Date.ToShortDateString()} | {game.HomeTeam.Name} - {game.AwayTeam.Name}")</p>
+        }
+    </div>
+    
+</div>

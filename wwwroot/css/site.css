@@ -1,0 +1,150 @@
+html {
+  font-size: 14px;
+}
+
+@media (min-width: 768px) {
+  html {
+    font-size: 16px;
+  }
+}
+
+html {
+  position: relative;
+  min-height: 100%;
+}
+
+body {
+  margin-bottom: 60px;
+}
+*{
+    color: cornflowerblue;
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+}
+
+.headline {
+    font-size: xx-large;
+    text-shadow: 1px 1px 2px black, 0 0 25px blue, 0 0 5px darkblue;
+}
+
+.navbar {
+    color: black;
+    width: fit-content;
+    margin: 10px;
+}
+
+.flex {
+    width: 100%;
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.right {
+    justify-content: flex-end;
+}
+
+ul {
+    margin: 10px;
+    list-style: none;
+}
+
+li {
+    margin: 20px;
+}
+
+.italic {
+    font-style: italic;
+}
+
+.border {
+    border: 1px;
+    border-color: aquamarine;
+    border-radius: 20px;
+    border-style: inset;
+}
+
+.box {
+    width: 30px;
+    height: 20px;
+    transition: 0.5s;
+}
+
+.bigbox {
+    width: 90%;
+    height: 200px;
+}
+.bigbox-auto{
+    width: 90%;
+}
+
+.center {
+    justify-content: center;
+}
+
+.around {
+    justify-content: space-around;
+}
+
+.halfwidth {
+    width: 50%;
+}
+
+.lightbackground {
+    background-color: cornsilk;
+}
+
+.fitinbox {
+    width: 100%;
+    height: 100%;
+}
+.flagbackground {
+    background-size: cover;
+    background-position: center;
+}
+.sweden {
+    background-image: url(/Images/Flag_of_Sweden.svg.png);
+}
+
+.england {
+    background-image: url(/Images/Flag_of_England.svg.png);
+}
+
+.spain {
+    background-image: url(/Images/Flag_of_Spain.png);
+}
+
+.italy {
+    background-image: url(/Images/Flag_of_Italy.png);
+}
+
+.germany {
+    background-image: url("/Images/Flag_of_Germany.png");
+}
+
+.france {
+    background-image: url("/Images/Flag-of-France.png");
+}
+
+.box:hover {
+    transform: scale(1.5);
+}
+.gameContainer {
+    transition: 0.5s;
+    background-color:lightskyblue;    
+}
+    .gameContainer:hover {
+        transform: scale(1.1);
+    }
+.chosenGameContainer{
+    text-align:center;
+    padding:10px;
+}
+.padding-0{
+    padding:0px 0px 0px 0px;
+}
+.navbar-placing{
+    display:flex;
+    flex-direction:row;
+    align-content:space-between;
+    align-items:baseline;
+
+}
