@@ -1,6 +1,5 @@
 using BetValue.Database;
 using BetValue.Repos;
-using BetValue.Services;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -13,7 +12,8 @@ var connectionString = builder.Configuration.GetConnectionString("BetValueConnec
 builder.Services.AddDbContext<BetValueDbContext>(options => options.UseSqlServer(connectionString));
 
 builder.Services.AddScoped<ILeagueModelRepo, LeagueModelRepo>();
-builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
+//builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
+builder.Services.AddScoped<UnitOfWork>();
 
 var app = builder.Build();
 

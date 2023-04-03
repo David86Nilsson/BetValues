@@ -5,24 +5,19 @@ namespace BetValue.Models
     public class GameModel
     {
         public int Id { get; set; }
+        [ForeignKey(nameof(HomeTeam))]
         public int? HomeTeamId { get; set; }
         public TeamModel? HomeTeam { get; set; }
+        [ForeignKey(nameof(AwayTeam))]
         public int? AwayTeamId { get; set; }
         public TeamModel? AwayTeam { get; set; }
-
-        [ForeignKey(nameof(Serie))]
         public int SerieId { get; set; }
-        public SerieModel Serie { get; set; }
         public int HomeGoals { get; set; }
         public int AwayGoals { get; set; }
         public int Round { get; set; }
         public int Winner { get; set; }
-        public string? Odds1 { get; set; }
-        public string? OddsX { get; set; }
-        public string? Odds2 { get; set; }
-        public double OddsChances1 { get; set; }
-        public double OddsChancesX { get; set; }
-        public double OddsChances2 { get; set; }
+        public int homeCorners { get; set; }
+        public int awayCorners { get; set; }
         public double CorrectOdds1 { get; set; }
         public double CorrectOddsX { get; set; }
         public double CorrectOdds2 { get; set; }
@@ -42,14 +37,13 @@ namespace BetValue.Models
             this.AwayTeam = AwayTeam;
             this.Date = Date;
             Pitch = this.HomeTeam.Pitch;
-            this.Serie = Serie;
+            SerieId = Serie.Id;
             Winner = -1;
-            this.HomeTeam.Games.Add(this);
-            this.AwayTeam.Games.Add(this);
+            BetValue = -10;
         }
         public GameModel(TeamModel hTeam, TeamModel aTeam, int hGoals, int aGoals, int aRound, DateTime date, SerieModel serie)
         {
-            Serie = serie;
+            SerieId = serie.Id;
             Round = aRound;
             HomeTeam = hTeam;
             AwayTeam = aTeam;
@@ -58,6 +52,7 @@ namespace BetValue.Models
             IsPlayed = true;
             HomeGoals = hGoals;
             AwayGoals = aGoals;
+            BetValue = -10;
             if (HomeGoals > AwayGoals)
             {
                 Winner = 1;
@@ -70,10 +65,6 @@ namespace BetValue.Models
             {
                 Winner = 0;
             }
-
-            HomeTeam.Games.Add(this);
-
-            AwayTeam.Games.Add(this);
         }
     }
 }

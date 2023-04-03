@@ -1,19 +1,20 @@
 ﻿using BetValue.Database;
-using BetValue.Repos;
 
-namespace BetValue.Services
+namespace BetValue.Repos
 {
     public class UnitOfWork : IUnitOfWork
     {
         private readonly BetValueDbContext context;
-        private TeamModelRepository teamModelRepository;
-        private GameModelRepository gameModelRepository;
-        private BetModelRepository betModelRepository;
-        private SerieModelRepository serieModelRepository;
-        private SerieMemberModelRepository serieMemberModelRepository;
+
+        private TeamModelRepository? teamModelRepository;
+        private GameModelRepository? gameModelRepository;
+        private BetModelRepository? betModelRepository;
+        private SerieModelRepository? serieModelRepository;
+        private SerieMemberModelRepository? serieMemberModelRepository;
         //private CompetionModelRepository? competitionModelRepository;
-        private LeagueModelRepository leagueModelRepository;
-        private CountryModelRepository countryModelRepository;
+        private LeagueModelRepository? leagueModelRepository;
+        private CountryModelRepository? countryModelRepository;
+        private OddsModelRepository? oddsModelRepository;
 
         public UnitOfWork(BetValueDbContext context)
         {
@@ -111,9 +112,21 @@ namespace BetValue.Services
                 return countryModelRepository;
             }
         }
+        public OddsModelRepository OddsModelRepository
+        {
+            get
+            {
+                if (oddsModelRepository == null)
+                {
+                    oddsModelRepository = new OddsModelRepository(context);
+                }
+                return oddsModelRepository;
+            }
+        }
         public void Save()
         {
-            context.SaveChanges();
+
         }
     }
 }
+

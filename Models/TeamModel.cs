@@ -8,10 +8,8 @@ public class TeamModel
     [Key]
     public int Id { get; set; }
     public string Name { get; set; }
-
-    public List<string> ShortNames { get; set; } = new();
-    public string? Pitch { get; set; }
-    public List<GameModel> Games { get; set; } = new();
+    //public List<string> ShortNames { get; set; } = new();
+    public string Pitch { get; set; }
     public TeamModel(string Name)
     {
         this.Name = Name;

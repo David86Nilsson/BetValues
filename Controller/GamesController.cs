@@ -1,5 +1,5 @@
 ﻿using BetValue.Models;
-using BetValue.Services;
+using BetValue.Repos;
 using Microsoft.AspNetCore.Mvc;
 
 namespace BetValue.Controller

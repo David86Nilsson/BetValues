@@ -1,4 +1,5 @@
-﻿using BetValue.Models;
+﻿
+using BetValue.Models;
 
 namespace BetValue.Repos
 {

@@ -1,8 +1,10 @@
-﻿using BetValue.Database;
+﻿
+
+using BetValue.Database;
 using BetValue.Models;
 using Microsoft.EntityFrameworkCore;
 
-namespace BetValue.Services
+namespace BetValue.Repos
 {
     public class SerieMemberModelRepository
     {
@@ -18,7 +20,12 @@ namespace BetValue.Services
         }
         public SerieMemberModel? GetSerieMember(int id)
         {
-            return context.SerieMembers.FirstOrDefault(g => g.Id == id);
+            return context.SerieMembers.Include(s => s.Team).Include(s => s.Serie).FirstOrDefault(g => g.Id == id);
+        }
+        public SerieMemberModel? GetSerieMember(string teamName, int serieId)
+        {
+            return context.SerieMembers.Include(s => s.Team).Include(s => s.Serie).
+                FirstOrDefault(sm => sm.Team.Name == teamName && sm.Serie.Id == serieId);
         }
         public void AddSerieMember(SerieMemberModel serieMember)
         {
@@ -37,6 +44,21 @@ namespace BetValue.Services
         {
             return context.SerieMembers.Include(s => s.Team).Include(s => s.Serie).
                 FirstOrDefault(sm => sm.Team.Name == name && sm.Serie.Year == year);
+        }
+
+        public async Task<SerieMemberModel?> GetSerieMemberAsync(TeamModel homeTeam, int id)
+        {
+            return await context.SerieMembers.Include(s => s.Team).Include(s => s.Serie).FirstOrDefaultAsync(sm => sm.TeamId == homeTeam.Id && sm.SerieId == id);
+        }
+
+        public async Task AddSerieMemberAsync(SerieMemberModel serieMember)
+        {
+            await context.SerieMembers.AddAsync(serieMember);
+        }
+
+        public async Task<IEnumerable<SerieMemberModel>?> GetSerieMembersAsync(int serieId)
+        {
+            return await context.SerieMembers.Include(s => s.Team).Include(s => s.Serie).Where(sm => sm.SerieId == serieId).ToListAsync();
         }
     }
 }

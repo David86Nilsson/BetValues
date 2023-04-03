@@ -1,7 +1,10 @@
-﻿using BetValue.Database;
-using BetValue.Models;
+﻿
 
-namespace BetValue.Services
+using BetValue.Database;
+using BetValue.Models;
+using Microsoft.EntityFrameworkCore;
+
+namespace BetValue.Repos
 {
     public class TeamModelRepository
     {
@@ -23,9 +26,17 @@ namespace BetValue.Services
         {
             return context.Teams.FirstOrDefault(g => g.Name == name);
         }
+        public async Task<TeamModel?> GetTeamAsync(string name)
+        {
+            return await context.Teams.FirstOrDefaultAsync(t => name.Contains(t.Name));
+        }
         public void AddTeam(TeamModel team)
         {
             context.Teams.Add(team);
+        }
+        public async Task AddTeamAsync(TeamModel team)
+        {
+            await context.Teams.AddAsync(team);
         }
         public void UpdateTeam(TeamModel team)
         {

@@ -1,7 +1,8 @@
 ﻿using BetValue.Database;
 using BetValue.Models;
+using Microsoft.EntityFrameworkCore;
 
-namespace BetValue.Services
+namespace BetValue.Repos
 {
     public class CountryModelRepository
     {
@@ -34,6 +35,17 @@ namespace BetValue.Services
         public void RemoveCountry(CountryModel country)
         {
             context.Countries.Remove(country);
+        }
+
+        public async Task<CountryModel?> GetCountryAsync(string countryName)
+        {
+            return await context.Countries.FirstOrDefaultAsync(c => c.Name == countryName);
+        }
+
+        public async Task<CountryModel?> AddCountryAsync(CountryModel newCountry)
+        {
+            await context.Countries.AddAsync(newCountry);
+            return await context.Countries.FirstOrDefaultAsync(c => c.Name == newCountry.Name);
         }
     }
 }

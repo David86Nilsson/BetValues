@@ -9,7 +9,7 @@
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/BetValue.styles.css" asp-append-version="true" />
 </head>
-<body>f
+<body>
     <header>
         <div class="container">
         <div class="row">
@@ -21,7 +21,6 @@
         </div>   
         <div class="row">
                 <nav class="navbar navbar-expand-lg navbar-dark bg-primary w-100 border align-items-center align-content-start">
-                    <a class="navbar-brand" href="#">My Website</a>
 
                     <!-- The expansion button for the leagues links -->
                     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarLeagues" aria-controls="navbarLeagues" aria-expanded="false" aria-label="Toggle navigation">
@@ -30,17 +29,29 @@
 
                     <div class="collapse navbar-collapse" id="navbarLeagues">
                         <ul class="navbar-nav mr-auto">
-                            @foreach (LeagueModel league in Model.AllLeagues)
+                            @foreach (CountryModel country in Model.AllCountries)
+                            {
+                                <li class="padding-0 d-flex flex-column box m-5 align-items-start justify-content-start m-5 flagbackground country" id="@country.Id">
+                                    <span class="country"><img src="@country.ImageUrl" class="box country" id="@country.Id" /></span>
+                                </li>
+                            }
+                            <!-- The leagues links -->
+                            <li id="leagueList">
+                                
+                            </li>
+ @*                           @foreach (LeagueModel league in Model.AllLeagues)
                             {
                                 <a asp-area="" asp-page="Details" asp-route-id="@league.Id">
                                     <li class="padding-0 d-flex flex-column box m-5 align-items-start justify-content-start m-5 flagbackground">
                                         <span class=""><img src="@league.Country.ImageUrl" class="box" />@league.Name</span>
                                     </li>
                                 </a>
-                            }
+                            }*@
                               </ul>
                             </div>
+                            <div>
 
+                            </div>
                             <!-- The search bar on the right -->
                             <div class="form-inline my-2 my-lg-0">
                                 <input class="form-control mr-sm-2 text-primary" id="searchBar" type="search" placeholder="Search" aria-label="Search">
@@ -64,7 +75,13 @@
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>
-
+    <script>
+        $(document).ready(function () {
+            $('.navbar-toggler').on('click', function () {
+                $(this).toggleClass('active');
+            });
+        });
+    </script>
     @await RenderSectionAsync("Scripts", required: false)
 </body>
 </html>

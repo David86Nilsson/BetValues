@@ -11,7 +11,5 @@ namespace BetValue.Models
         [ForeignKey(nameof(Country))]
         public int? CountryId { get; set; }
         public CountryModel? Country { get; set; }
-        public List<TeamModel> Teams { get; set; } = new();
-        public List<GameModel> Games { get; set; } = new();
     }
 }

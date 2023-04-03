@@ -6,12 +6,18 @@
 }
 <div class="row">
     <div class="col-12 col-md-4">
-
+        <button onclick="toggleForm()" class="btn btn-outline-primary border m-2">Filter</button>
     </div>
     <div class="col-12 col-md-4">
-        <form>
-            <label for="inputValue">Value above:</label>
-            <input type="text" id="inputValue" asp-for="Value" class="w-25 border"/>
+        <form method="post" id="filterForm" style="display:none;">
+            <div class="form-group">
+                <label for="inputValue">Value above:</label>
+                <input type="number" min="0" max="1.0" step="0.1" id="inputValue" asp-for="Value" class="w-auto border text-center" />
+                <span asp-validation-for="Value" class="text-danger"></span>
+                <label for="inputMaxOdds">Max odds:</label>
+                <input type="number" min="1.5" max="10" step="0.5" id="inputMaxOdds" asp-for="MaxOdds" class="w-auto border text-center" />
+                <span asp-validation-for="MaxOdds" class="text-danger"></span>
+            </div>
             <input type="submit" value="Räkna om" class="btn btn-outline-primary border"/>
         </form>
     </div>
@@ -24,16 +30,27 @@
         </div>
     </div>
     <div class="col-12 col-md-4">
-        @foreach (GameModel game in Model.ValueGames)
+        @foreach (GameModel game in Model.ValueGames)        
         {            
-            <p class="gameContainer border m-1 p-3" id=@game.Id>@Html.Raw($"{game.Serie.League.Name}<br />{game.Date.ToShortDateString()} | {game.HomeTeam.Name} - {game.AwayTeam.Name} <br /> Bet:{game.WhatBetHasValue} <br />Correct Odds: {game.CorrectOdds1} - {game.CorrectOddsX} - {game.CorrectOdds2} <br /> Actual Odds:{game.Odds1} - {game.OddsX} - {game.Odds2}<br />Value: {game.BetValue}")</p>
+            <p class="gameContainer border m-1 p-3" id=@game.Id>@Html.Raw($"{game.Date.ToShortDateString()} | {game.HomeTeam.Name} - {game.AwayTeam.Name}<br />Value: {Math.Round(game.BetValue,2)}")</p>
         }
     </div>
-    <div class="col-12 col-md-4">
+    <div class="col-12 col-md-4" id="unplayedContainer">
         @foreach (GameModel game in Model.UnplayedGames)
         {
-            <p class="gameContainer border bg-light m-1 p-3" id=@game.Id>@Html.Raw($"{game.Serie.League.Name}<br />{game.Date.ToShortDateString()} | {game.HomeTeam.Name} - {game.AwayTeam.Name}")</p>
+            <p class="gameContainer border bg-light m-1 p-3" id=@game.Id>@Html.Raw($"{game.Date.ToShortDateString()} | {game.HomeTeam.Name} - {game.AwayTeam.Name}")</p>
         }
     </div>
     
 </div>
+
+<script>
+    function toggleForm() {
+        var form = document.getElementById("filterForm");
+        if (form.style.display === "none") {
+            form.style.display = "block";
+        } else {
+            form.style.display = "none";
+        }
+    }
+</script>

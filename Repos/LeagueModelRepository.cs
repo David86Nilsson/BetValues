@@ -2,7 +2,7 @@
 using BetValue.Models;
 using Microsoft.EntityFrameworkCore;
 
-namespace BetValue.Services
+namespace BetValue.Repos
 {
     public class LeagueModelRepository
     {
@@ -14,7 +14,7 @@ namespace BetValue.Services
         }
         public List<LeagueModel> GetLeagues()
         {
-            return context.Leagues.Include(l => l.Series).Include(l => l.Country).ToList();
+            return context.Leagues.ToList();
         }
         public LeagueModel? GetLeague(int id)
         {
@@ -22,11 +22,19 @@ namespace BetValue.Services
         }
         public LeagueModel? GetLeague(string name)
         {
-            return context.Leagues.FirstOrDefault(g => g.Name == name);
+            return context.Leagues.FirstOrDefault(g => g.Name.ToLower() == name.ToLower());
+        }
+        public async Task<LeagueModel?> GetLeagueAsync(string name)
+        {
+            return await context.Leagues.FirstOrDefaultAsync(l => l.Name.ToLower() == name.ToLower());
         }
         public void AddLeague(LeagueModel league)
         {
             context.Leagues.Add(league);
+        }
+        public async Task AddLeagueAsync(LeagueModel league)
+        {
+            await context.Leagues.AddAsync(league);
         }
         public void UpdateLeague(LeagueModel league)
         {

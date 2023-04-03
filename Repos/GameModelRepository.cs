@@ -1,8 +1,10 @@
-﻿using BetValue.Database;
+﻿
+
+using BetValue.Database;
 using BetValue.Models;
 using Microsoft.EntityFrameworkCore;
 
-namespace BetValue.Services
+namespace BetValue.Repos
 {
     public class GameModelRepository
     {
@@ -12,17 +14,25 @@ namespace BetValue.Services
         {
             this.context = context;
         }
+        public List<GameModel> GetGames()
+        {
+            return context.Games.ToList();
+        }
         public async Task<List<GameModel>> GetGamesAsync()
         {
-            return await context.Games.ToListAsync();
+            return await context.Games.Include(g => g.HomeTeam).Include(g => g.AwayTeam).ToListAsync();
         }
-        public async Task<GameModel?> GetGameAsync(int id)
+        public GameModel? GetGame(int id)
         {
-            return await context.Games.FirstOrDefaultAsync(g => g.Id == id);
+            return context.Games.Include(g => g.HomeTeam).Include(g => g.AwayTeam).FirstOrDefault(g => g.Id == id);
         }
         public void AddGame(GameModel game)
         {
             context.Games.Add(game);
+        }
+        public async Task AddGameAsync(GameModel game)
+        {
+            await context.Games.AddAsync(game);
         }
         public void UpdateGame(GameModel game)
         {
@@ -39,41 +49,48 @@ namespace BetValue.Services
         }
         public GameModel? GetGame(string homeTeam, string awayTeam, string year)
         {
-            return context.Games.Include(g => g.HomeTeam).Include(g => g.AwayTeam).Include(g => g.Serie).
-                FirstOrDefault(g => g.HomeTeam.Name == homeTeam && g.AwayTeam.Name == awayTeam && g.Serie.Year == year);
+            List<GameModel>? games = context.Games.Include(g => g.HomeTeam).Include(g => g.AwayTeam).Where(g => g.HomeTeam.Name.Contains(homeTeam) && g.AwayTeam.Name.Contains(awayTeam)).ToList();
+            if (games != null)
+            {
+                foreach (GameModel game in games)
+                {
+                    SerieModel? serie = context.Series.FirstOrDefault(s => s.Id == game.SerieId);
+                    if (serie.Year == year) return game;
+                }
+                return games.LastOrDefault();
+            }
+
+            return null;
+        }
+        public async Task<GameModel?> GetGameAsync(string homeTeam, string awayTeam)
+        {
+            GameModel? game = await context.Games.Include(g => g.HomeTeam).Include(g => g.AwayTeam).OrderBy(g => g.Id).LastOrDefaultAsync
+            (g => homeTeam.Contains(g.HomeTeam.Name) && awayTeam.Contains(g.AwayTeam.Name));
+
+            //GameModel? game = await context.Games.Include(g => g.HomeTeam).Include(g => g.AwayTeam).FirstOrDefaultAsync
+            //(g => g.HomeTeam.ShortNames.Any(s => s == homeTeam) && g.AwayTeam.ShortNames.Any(s => s == awayTeam));
+
+            //GameModel? game = await context.Games
+            //                .Include(g => g.HomeTeam).Include(g => g.AwayTeam)
+            //                .Where(g => g.HomeTeam.ShortNames.Where(s => s == homeTeam).FirstOrDefault() != null
+            //                        && g.AwayTeam.ShortNames.Where(s => s == awayTeam).FirstOrDefault() != null)
+            //                .FirstOrDefaultAsync();
+
+            return game;
+        }
+        public async Task<GameModel?> GetGameAsync(string homeTeam, string awayTeam, int serieId)
+        {
+            GameModel? game = await context.Games.Include(g => g.HomeTeam).Include(g => g.AwayTeam).
+                FirstOrDefaultAsync(g => homeTeam.Contains(g.HomeTeam.Name) && awayTeam.Contains(g.AwayTeam.Name) && g.SerieId == serieId);
+            //GameModel? game = await context.Games.Include(g => g.HomeTeam).Include(g => g.AwayTeam).
+            //   FirstOrDefaultAsync(g => g.HomeTeam.Name == homeTeam && g.AwayTeam.Name == awayTeam && g.SerieId == serieId);
+
+            return game;
         }
 
-        public async Task<List<GameModel>>? GetValueGamesAsync(double value, int? leagueId = null)
+        public async Task<GameModel?> GetGameAsync(int id)
         {
-            List<GameModel> valueList;
-            if (leagueId != null)
-            {
-                valueList = await context.Games.
-                    Include(g => g.HomeTeam).Include(g => g.AwayTeam).Include(g => g.Serie).
-                    Where(g => g.BetValue > value && g.Date > DateTime.Now && g.Serie.LeagueId == leagueId).OrderBy(g => g.Date).ToListAsync();
-            }
-            else
-            {
-                valueList = await context.Games.
-                    Include(g => g.HomeTeam).Include(g => g.AwayTeam).
-                    Where(g => g.BetValue > value && g.Date > DateTime.Now).OrderBy(g => g.Date).ToListAsync();
-            }
-            return valueList;
-        }
-
-        public async Task<List<GameModel>>? GetUnplayedGamesAsync()
-        {
-            List<GameModel> unplayedList = await context.Games.
-                Include(g => g.HomeTeam).Include(g => g.AwayTeam).
-                Where(g => g.Date < DateTime.Now).OrderBy(g => g.Date).ToListAsync();
-            return unplayedList;
-        }
-        public async Task<List<GameModel>>? GetUnplayedGamesWithOddsAsync()
-        {
-            List<GameModel> unplayedList = await context.Games.
-                Include(g => g.HomeTeam).Include(g => g.AwayTeam).
-                Where(g => g.Date > DateTime.Now && !string.IsNullOrEmpty(g.Odds1)).OrderBy(g => g.Date).ToListAsync();
-            return unplayedList;
+            return await context.Games.FirstOrDefaultAsync(g => g.Id == id);
         }
     }
 }

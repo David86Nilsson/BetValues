@@ -1,7 +1,8 @@
 ﻿using BetValue.Database;
 using BetValue.Models;
 
-namespace BetValue.Services
+namespace BetValue.Repos
+
 {
     public class BetModelRepository
     {
