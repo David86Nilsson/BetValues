@@ -28,6 +28,18 @@ namespace BetValue.Database
                 .HasOne(g => g.AwayTeam)
                 .WithMany()
                 .HasForeignKey(g => g.AwayTeamId);
+
+
+            // modelBuilder.Entity<TeamModel>()
+            //.Property(x => x.ShortNames)
+            //.HasConversion(
+            //    v => string.Join(',', v),
+            //    v => v.Split(',', StringSplitOptions.RemoveEmptyEntries).ToList())
+            //.Metadata
+            //.SetValueComparer(new ValueComparer<List<string>>(
+            //(c1, c2) => c1.SequenceEqual(c2),
+            //c => c.Aggregate(0, (a, v) => HashCode.Combine(a, v.GetHashCode())),
+            //c => (List<string>)c.ToList()));
         }
     }
 }

@@ -1,0 +1,31 @@
+﻿@page
+@model BetValue.Pages.AboutModel
+@{
+}
+
+<div class="row">
+    <div class="col-12">
+        <h3>Detta är algoritmen baserad på</h3>
+        <div class="text-white p-3 border">
+            
+            <p>
+                För att räkna ut sannolikhet i kommande matcher använder algoritmen en statistik bas bestånde av tre metriker i spelade matcher. Denna bas är tänkt att korrelera starkare med ett lags prestation än bara gjorda mål.  
+            </p>
+            <p>
+                Den första metriken, justerade mål, tar hänsyn till villkoren under vilka varje mål gjordes. Värdet på mål som görs minskas när ett lag har fler spelare på planen, liksom mål som görs sent i en match när ett lag redan leder. Efter att ha sänkt värdet på dessa mål ökas värdet på alla andra mål för att det totala antalet justerade mål generellt ska stämma överens med det totala antalet faktiska mål som görs över tid.                
+            </p>
+            <p>
+                Den andra metriken, skottbaserade förväntade mål är en uppskattning av hur många mål ett lag "borde" ha gjort med tanke på de skott de tog i den matchen. Varje skott tilldelas en sannolikhet att göra mål baserat på dess avstånd och vinkel från målet, samt vilken del av kroppen skottet togs med, med en anpassning för vilken specifik spelare som tog skottet. Dessa individuella skott-sannolikheter läggs ihop för att producera ett lags skottbaserade förväntade mål för den matchen, vilket kan vara större eller mindre än antalet mål det faktiskt gjorde.
+            </p>
+            <p>
+                Den tredje metriken, Icke-skottbaserade förväntade mål är en uppskattning av hur många mål ett lag "borde" ha gjort baserat på icke-skottaktioner de tog runt motståndarlagets mål: passningar, interceptioner, dribblingar och tacklingar. Till exempel vet man att att återta bollen vid motståndarlagets straffpunkt resulterar i ett mål ungefär 9 procent av tiden, och en fullbordad passning som tas emot i mitten av sexmetersområdet leder till ett mål ungefär 14 procent av tiden. Dessa individuella åtgärder läggs ihop över en hel match för att komma fram till ett lags icke-skottbaserade förväntade mål. Precis som för skottbaserade förväntade mål finns det en justering för varje åtgärd baserat på framgångsgraden för spelaren eller spelarna som tar åtgärden (både passaren och mottagaren i fallet med en passning).
+            </p>
+            <p>
+                Eftersom alla tre metriker representerar antalet mål som ett lag antingen gjorde eller kunde förväntas göra under matchen, är de direkt jämförbara. Så ett lags sammansatta offensiva poäng för den matchen är ett genomsnitt av dess prestation över de tre metrikerna, och dess sammansatta defensiva poäng är ett genomsnitt av de tre metrikerna för dess motståndare.
+            </p>
+           <p>
+                Med hjälp av denna statistiska bakgrund får vi ut lagens grundkvalité och kan därefter räkna ut hur många mål de förväntas göra i kommande match. Utifrån denna uträkning jämförs olika möjliga utfall i den kommande match och med hjälp av detta finner vi sannolikheten för vinnare i matchen. Vi kan sedan jämföra detta med oddsen som spelbolagen erbjuder för att se om det finns något värde i att spela på ett visst lag.
+           </p>
+        </div>
+    </div>
+</div>

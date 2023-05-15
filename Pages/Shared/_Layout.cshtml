@@ -11,56 +11,38 @@
 </head>
 <body>
     <header>
-        <div class="container">
-        <div class="row">
-            <div class="col-12">
-                <div class="justify-content-center text-center">
-                        <h1 class="">B<span class="text-info">e</span>t<strong class="border">V</strong>alu<span class="text-info">e</span>s</h1>
-                </div>
-            </div>            
-        </div>   
-        <div class="row">
-                <nav class="navbar navbar-expand-lg navbar-dark bg-primary w-100 border align-items-center align-content-start">
+        <div class="container">   
+            <div class="row">
+                    <nav class="navbar navbar-expand-lg navbar-dark bg-primary w-100 border align-items-center align-content-start">
 
-                    <!-- The expansion button for the leagues links -->
-                    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarLeagues" aria-controls="navbarLeagues" aria-expanded="false" aria-label="Toggle navigation">
-                        <span class="navbar-toggler-icon"></span>
-                    </button>
+                        <!-- The expansion button for the leagues links -->
 
-                    <div class="collapse navbar-collapse" id="navbarLeagues">
-                        <ul class="navbar-nav mr-auto">
-                            @foreach (CountryModel country in Model.AllCountries)
-                            {
-                                <li class="padding-0 d-flex flex-column box m-5 align-items-start justify-content-start m-5 flagbackground country" id="@country.Id">
-                                    <span class="country"><img src="@country.ImageUrl" class="box country" id="@country.Id" /></span>
-                                </li>
-                            }
-                            <!-- The leagues links -->
-                            <li id="leagueList">
-                                
-                            </li>
- @*                           @foreach (LeagueModel league in Model.AllLeagues)
-                            {
-                                <a asp-area="" asp-page="Details" asp-route-id="@league.Id">
-                                    <li class="padding-0 d-flex flex-column box m-5 align-items-start justify-content-start m-5 flagbackground">
-                                        <span class=""><img src="@league.Country.ImageUrl" class="box" />@league.Name</span>
-                                    </li>
-                                </a>
-                            }*@
-                              </ul>
-                            </div>
+                        <div class="collapse navbar-collapse d-flex justify-content-between" id="navbarLeagues">
+                      
                             <div>
+                                <h1 class="">B<span class="text-info">e</span>t<strong class="border">V</strong>alu<span class="text-info">e</span>s</h1>
+                            </div>
 
-                            </div>
-                            <!-- The search bar on the right -->
+                                <!-- The search bar on the right -->
                             <div class="form-inline my-2 my-lg-0">
-                                <input class="form-control mr-sm-2 text-primary" id="searchBar" type="search" placeholder="Search" aria-label="Search">
+                                    <input class="form-control mr-sm-2 text-primary" id="searchBar" type="search" placeholder="Search" aria-label="Search">
                             </div>
+                        </div>
+                    </nav>
+            </div>
+            <div class="row">
+                <nav class="col-12 d-flex flex-row justify-content-between">
+                    <div class="d-flex flex-row" id="links">
+                        <a asp-page="/Index" class="nav-link">Home</a>
+                        <a asp-page="/About" class="nav-link">How is the betvalue calculated?</a>
+                        <a asp-page="/Contact" class="nav-link">Contact</a>
+                    </div>
                 </nav>
-        </div>
+            </div>
         </div>
     </header>
     <div class="container">
+        
         <main role="main" class="pb-3">
             @RenderBody()
         </main>

@@ -16,17 +16,25 @@ namespace BetValue.Repos
         {
             return context.Leagues.ToList();
         }
+        public async Task<List<LeagueModel>> GetLeaguesAsync()
+        {
+            return await context.Leagues.ToListAsync();
+        }
         public LeagueModel? GetLeague(int id)
         {
-            return context.Leagues.FirstOrDefault(g => g.Id == id);
+            return context.Leagues.FirstOrDefault(l => l.Id == id);
         }
         public LeagueModel? GetLeague(string name)
         {
-            return context.Leagues.FirstOrDefault(g => g.Name.ToLower() == name.ToLower());
+            return context.Leagues.FirstOrDefault(l => l.Name.ToLower() == name.ToLower());
         }
         public async Task<LeagueModel?> GetLeagueAsync(string name)
         {
             return await context.Leagues.FirstOrDefaultAsync(l => l.Name.ToLower() == name.ToLower());
+        }
+        public async Task<LeagueModel?> GetLeagueAsync(int id)
+        {
+            return await context.Leagues.FirstOrDefaultAsync(l => l.Id == id);
         }
         public void AddLeague(LeagueModel league)
         {

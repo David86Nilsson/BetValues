@@ -22,6 +22,10 @@ namespace BetValue.Repos
         {
             return await context.Games.Include(g => g.HomeTeam).Include(g => g.AwayTeam).ToListAsync();
         }
+        public async Task<List<GameModel>> GetUnplayedGamesWithOddsAsync()
+        {
+            return await context.Games.Include(g => g.HomeTeam).Include(g => g.AwayTeam).Where(g => !string.IsNullOrEmpty(g.WhatBetHasValue) && g.Date >= DateTime.Now.Date).ToListAsync();
+        }
         public GameModel? GetGame(int id)
         {
             return context.Games.Include(g => g.HomeTeam).Include(g => g.AwayTeam).FirstOrDefault(g => g.Id == id);

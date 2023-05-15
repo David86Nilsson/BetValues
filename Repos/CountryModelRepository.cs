@@ -16,6 +16,10 @@ namespace BetValue.Repos
         {
             return context.Countries.ToList();
         }
+        public async Task<List<CountryModel>> GetCountriesAsync()
+        {
+            return await context.Countries.ToListAsync();
+        }
         public CountryModel? GetCountry(int id)
         {
             return context.Countries.FirstOrDefault(c => c.Id == id);

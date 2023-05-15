@@ -1,5 +1,6 @@
 using BetValue.Models;
 using BetValue.Repos;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 
 namespace BetValue.Pages
@@ -17,6 +18,12 @@ namespace BetValue.Pages
         public List<GameModel> ValueGames { get; set; }
         public List<GameModel> UnplayedGames { get; set; }
         public SerieModel SerieToShow { get; set; }
+
+        [BindProperty]
+        public string? Value { get; set; }
+        [BindProperty]
+        public string? MaxOdds { get; set; }
+
         public IEnumerable<SerieMemberModel> SerieMembers { get; set; }
         public DetailsModel(UnitOfWork unitOfWork)
         {
@@ -26,16 +33,16 @@ namespace BetValue.Pages
         public async Task OnGet(int id)
         {
             Id = id;
-            League = uow.LeagueModelRepository.GetLeague(id);
-            SerieToShow = await uow.SerieModelRepository.GetLastSerieAsync(League.Id);
 
-            AllCountries = uow.CountryModelRepository.GetCountries();
-            AllLeagues = uow.LeagueModelRepository.GetLeagues();
+            AllCountries = await uow.CountryModelRepository.GetCountriesAsync();
+            AllLeagues = await uow.LeagueModelRepository.GetLeaguesAsync();
+            League = AllLeagues.Where(l => l.Id == id).FirstOrDefault();
+            SerieToShow = await uow.SerieModelRepository.GetLastSerieAsync(id);
             AllGames = await uow.GameModelRepository.GetGamesAsync();
             SerieMembers = await uow.SerieMemberModelRepository.GetSerieMembersAsync(SerieToShow.Id);
 
-            ValueGames = AllGames.Where(g => g.BetValue > 0 && g.Date > DateTime.Now && g.SerieId == SerieToShow.Id).ToList();
-            UnplayedGames = AllGames.Where(g => g.Date > DateTime.Now && g.BetValue > -10 && g.SerieId == SerieToShow.Id).ToList();
+            ValueGames = AllGames.Where(g => g.BetValue > 0 && g.Date >= DateTime.Now.Date && g.SerieId == SerieToShow.Id).OrderBy(g => g.Date).ToList();
+            UnplayedGames = AllGames.Where(g => g.Date >= DateTime.Now.Date && g.SerieId == SerieToShow.Id).OrderBy(g => g.Date).ToList();
         }
     }
 }

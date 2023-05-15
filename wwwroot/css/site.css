@@ -14,7 +14,8 @@ html {
 }
 
 body {
-  margin-bottom: 60px;
+    margin-bottom: 60px;
+    background: linear-gradient(to right,black,blue,black,blue);
 }
 *{
     color: cornflowerblue;
@@ -65,11 +66,13 @@ li {
 .box {
     width: 30px;
     height: 20px;
+    border: none;
+    border-radius: 20px;
     transition: 0.5s;
 }
 
 .bigbox {
-    width: 90%;
+    width: 100vw;
     height: 200px;
 }
 .bigbox-auto{
@@ -100,43 +103,20 @@ li {
     background-size: cover;
     background-position: center;
 }
-.sweden {
-    background-image: url(/Images/Flag_of_Sweden.svg.png);
-}
-
-.england {
-    background-image: url(/Images/Flag_of_England.svg.png);
-}
-
-.spain {
-    background-image: url(/Images/Flag_of_Spain.png);
-}
-
-.italy {
-    background-image: url(/Images/Flag_of_Italy.png);
-}
-
-.germany {
-    background-image: url("/Images/Flag_of_Germany.png");
-}
-
-.france {
-    background-image: url("/Images/Flag-of-France.png");
-}
 
 .box:hover {
     transform: scale(1.5);
 }
 .gameContainer {
-    transition: 0.5s;
-    background-color:lightskyblue;    
+    transition: 0.5s;  
 }
     .gameContainer:hover {
         transform: scale(1.1);
     }
-.chosenGameContainer{
-    text-align:center;
-    padding:10px;
+.chosenGameContainer {
+    text-align: center;
+    padding: 10px;
+    margin-bottom: 100px;
 }
 .padding-0{
     padding:0px 0px 0px 0px;
@@ -148,3 +128,46 @@ li {
     align-items:baseline;
 
 }
+.leagueLink {
+    text-decoration: none;
+    color: black;
+    margin-bottom:50px;
+}
+.green-text{
+    color:lawngreen;
+}
+.red-text {
+    color: red;
+}
+#GameBox {
+    display: none;
+    background-color: blue;
+    color: white;
+    position: fixed;
+    bottom: 0%;
+    max-height: 400px;
+    max-width: 100%;
+    border-radius: 20px 20px 0px 0px;
+    border: 2px solid white;
+    overflow: auto;
+    z-index: 1;
+}
+#gameBoxTextContainer {
+    padding-bottom: 10px;
+}
+.hidden {
+    display: none;
+}
+.close-btn {
+    border: 2px solid white;
+    border-radius:50%;
+    
+}
+#leagueList {
+}
+.leagueHeadline {
+    color: white;
+}
+
+
+

@@ -28,7 +28,7 @@ namespace BetValue.Controller
             var odds = _unitOfWork.OddsModelRepository.GetOdds(id);
             return Ok(odds);
         }
-        [HttpGet("/GetOddsFromGame/{sign}{gameiId}")]
+        [HttpGet("/GetOddsFromGame/{sign}/{gameiId}")]
 
         public IActionResult GetOddsFromGame(string sign, int gameId)
         {

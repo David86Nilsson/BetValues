@@ -55,5 +55,15 @@ namespace BetValue.Repos
         {
             return await context.Odds.Include(o => o.Game).Where(o => o.GameId == game.Id).ToListAsync();
         }
+        public List<OddsModel>? GetAllOddsInGame(int id)
+        {
+            return context.Odds.Include(o => o.Game).Where(o => o.GameId == id).ToList();
+        }
+
+        public async Task<List<OddsModel>?> GetOddsFromGame(string sign, int gameId)
+        {
+            var odds = context.Odds.Include(o => o.Game).Where(o => o.GameId == gameId).ToList();
+            return odds;
+        }
     }
 }

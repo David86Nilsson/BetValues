@@ -4,43 +4,73 @@
 @{
 }
 
-
-<h3 class="text-center">@Model.League.Name</h3>
 <div class="row">
-    <div class="col-12 col-lg-4">
-        <div class="bigbox border bg-light" id="GameBox">
+    <div class="col-12 d-flex justify-content-center">
+        <div id="loadingContainer">
+            <div class="loading">
+                <span class="spinner-grow text-primary" role="status">
+                </span>
+                <span class="sr-only">Loading...</span>
+                <span class="spinner-grow text-primary" role="status">
+                </span>
+            </div>
         </div>
-        <table>       
-            <thead>
-                <th>Rank</th>
-                <th>Lag</th>
-                <th>Matcher</th>
-                <th>Goals</th>
-                <th>Poäng</th>
-            </thead>
-            <tbody>
-                @foreach(SerieMemberModel serieMember in Model.SerieMembers){
-                    <tr class="border">
-                        <td>@serieMember.Rank</td>
-                        <td>@serieMember.Team.Name</td>
-                        <td>@serieMember.GamesPlayed</td>
-                        <td>@serieMember.GoalDiff</td>
-                        <td>@serieMember.Points</td>
-                    </tr>
-                }
-            </tbody>
-        </table>
     </div>
-    <div class="col-12 col-lg-4">
+</div>
+
+<h3 class="text-center leagueHeadline" id=@Model.SerieToShow.Id>@Model.League.Name</h3>
+<div class="row" id="page">
+    <div class="col-12 col-md-4">
+        <h3>Leagues</h3>
+        <div>
+            <ul class="list-group list-group-horizontal row">
+                @foreach (CountryModel country in Model.AllCountries)
+                {
+                    <li class=" col-4 box m-1 country padding-0" id="@country.Id">
+                        <span class="country padding-0"><img src="/Images/@country.ImageUrl" class="box country padding-0" id="@country.Id" /></span>
+                    </li>
+                }
+            </ul>
+        </div>
+
+        <div class="d-flex flex-column" id="leagueList">
+        </div>
+
+        <div class="" id="GameBox">
+            <div class="d-flex w-100 justify-content-end">
+                <button class="btn btn-outline-primary border text-danger close-btn" id="closeGameBox">X</button>
+            </div>
+            <div class="" id="gameBoxTextContainer"></div>
+        </div>
+    </div>
+    <div class="col-6 col-md-4">
+        <div class="d-flex">
+            <h3>Games with values</h3>
+            <button onclick="toggleForm()" class="btn btn-outline-primary border m-2">Filter</button>
+        </div>
+        <div class="d-flex w-100 justify-content-end">
+            <form method="post" id="filterForm" style="display:none">
+                <div class="form-group">
+                    <label for="inputValue">Value above:</label>
+                    <input type="number" min="0" max="1.0" step="0.1" id="inputValue" asp-for="Value" class="w-auto border text-center m-1" />
+                    <span asp-validation-for="Value" class="text-danger"></span>
+                    <label for="inputMaxOdds">Max odds:</label>
+                    <input type="number" min="0" max="10" step="0.5" id="inputMaxOdds" asp-for="MaxOdds" class="w-auto border text-center m-1" />
+                    <span asp-validation-for="MaxOdds" class="text-danger"></span>
+                </div>
+                <input type="submit" value="Räkna om" class="btn btn-outline-primary border" />
+            </form>
+        </div>
         @foreach (GameModel game in Model.ValueGames)
         {
-            <p class="gameContainer border m-1 p-3" id=@game.Id>@Html.Raw($"{game.Date.ToShortDateString()} | {game.HomeTeam.Name} - {game.AwayTeam.Name} <br /> Bet:{game.WhatBetHasValue} <br />Correct Odds: {game.CorrectOdds1} - {game.CorrectOddsX} - {game.CorrectOdds2} <br />Value: {game.BetValue}")</p>
+            <p class="gameContainer text-white border m-1 p-3" id=@game.Id>@Html.Raw($"{game.Date.ToShortDateString()}<br />{game.HomeTeam.Name} - {game.AwayTeam.Name}<br />Value: {Math.Round(game.BetValue,2)}")</p>
         }
     </div>
-    <div class="col-12 col-lg-4">
+    <div class="col-6 col-md-4" id="unplayedContainer">
+        <h3>Upcoming games</h3>
         @foreach (GameModel game in Model.UnplayedGames)
         {
-            <p class="gameContainer border bg-light m-1 p-3" id=@game.Id>@Html.Raw($"{game.Date.ToShortDateString()} | {game.HomeTeam.Name} - {game.AwayTeam.Name}")</p>
+            <p class="gameContainer border bg-light m-1 p-3 unPlayedGame" id=@game.Id>@Html.Raw($"{game.Date.ToShortDateString()}<br />{game.HomeTeam.Name} - {game.AwayTeam.Name}")</p>
         }
     </div>
 </div>

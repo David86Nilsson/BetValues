@@ -37,10 +37,10 @@ namespace BetValue.Migrations
                     b.Property<double>("BetValue")
                         .HasColumnType("float");
 
-                    b.Property<int>("GameId")
+                    b.Property<int>("OddsId")
                         .HasColumnType("int");
 
-                    b.Property<double>("Odds")
+                    b.Property<double>("PlayedOdds")
                         .HasColumnType("float");
 
                     b.Property<string>("Result")
@@ -48,7 +48,7 @@ namespace BetValue.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("GameId");
+                    b.HasIndex("OddsId");
 
                     b.ToTable("Bets");
                 });
@@ -93,7 +93,13 @@ namespace BetValue.Migrations
                     b.Property<double>("CorrectOdds1")
                         .HasColumnType("float");
 
+                    b.Property<double>("CorrectOdds1DNB")
+                        .HasColumnType("float");
+
                     b.Property<double>("CorrectOdds2")
+                        .HasColumnType("float");
+
+                    b.Property<double>("CorrectOdds2DNB")
                         .HasColumnType("float");
 
                     b.Property<double>("CorrectOddsX")
@@ -111,27 +117,6 @@ namespace BetValue.Migrations
                     b.Property<bool>("IsPlayed")
                         .HasColumnType("bit");
 
-                    b.Property<int?>("LeagueModelId")
-                        .HasColumnType("int");
-
-                    b.Property<string>("Odds1")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Odds2")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<double>("OddsChances1")
-                        .HasColumnType("float");
-
-                    b.Property<double>("OddsChances2")
-                        .HasColumnType("float");
-
-                    b.Property<double>("OddsChancesX")
-                        .HasColumnType("float");
-
-                    b.Property<string>("OddsX")
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<string>("Pitch")
                         .HasColumnType("nvarchar(max)");
 
@@ -141,13 +126,16 @@ namespace BetValue.Migrations
                     b.Property<int>("SerieId")
                         .HasColumnType("int");
 
-                    b.Property<int?>("TeamModelId")
-                        .HasColumnType("int");
-
                     b.Property<string>("WhatBetHasValue")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<int>("Winner")
+                        .HasColumnType("int");
+
+                    b.Property<int>("awayCorners")
+                        .HasColumnType("int");
+
+                    b.Property<int>("homeCorners")
                         .HasColumnType("int");
 
                     b.HasKey("Id");
@@ -155,12 +143,6 @@ namespace BetValue.Migrations
                     b.HasIndex("AwayTeamId");
 
                     b.HasIndex("HomeTeamId");
-
-                    b.HasIndex("LeagueModelId");
-
-                    b.HasIndex("SerieId");
-
-                    b.HasIndex("TeamModelId");
 
                     b.ToTable("Games");
                 });
@@ -199,6 +181,48 @@ namespace BetValue.Migrations
                     b.ToTable("Leagues");
                 });
 
+            modelBuilder.Entity("BetValue.Models.OddsModel", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<double>("AwayWin")
+                        .HasColumnType("float");
+
+                    b.Property<double>("AwayWinDNB")
+                        .HasColumnType("float");
+
+                    b.Property<double>("Draw")
+                        .HasColumnType("float");
+
+                    b.Property<double>("FavoriteDNB")
+                        .HasColumnType("float");
+
+                    b.Property<double>("FavoriteOdds")
+                        .HasColumnType("float");
+
+                    b.Property<int>("GameId")
+                        .HasColumnType("int");
+
+                    b.Property<double>("HomeWin")
+                        .HasColumnType("float");
+
+                    b.Property<double>("HomeWinDNB")
+                        .HasColumnType("float");
+
+                    b.Property<string>("Operator")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("GameId");
+
+                    b.ToTable("Odds");
+                });
+
             modelBuilder.Entity("BetValue.Models.SerieMemberModel", b =>
                 {
                     b.Property<int>("Id")
@@ -207,11 +231,11 @@ namespace BetValue.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
+                    b.Property<int>("CalculatedEndPoints")
+                        .HasColumnType("int");
+
                     b.Property<double>("Difficulty")
                         .HasColumnType("float");
-
-                    b.Property<int>("EndPoint")
-                        .HasColumnType("int");
 
                     b.Property<int>("GamesPlayed")
                         .HasColumnType("int");
@@ -243,13 +267,13 @@ namespace BetValue.Migrations
                     b.Property<int>("Rank")
                         .HasColumnType("int");
 
-                    b.Property<int>("SerieId")
+                    b.Property<int?>("SerieId")
                         .HasColumnType("int");
 
                     b.Property<double>("SpecialAverage")
                         .HasColumnType("float");
 
-                    b.Property<int>("TeamId")
+                    b.Property<int?>("TeamId")
                         .HasColumnType("int");
 
                     b.Property<int>("xP")
@@ -275,7 +299,7 @@ namespace BetValue.Migrations
                     b.Property<int>("LeagueId")
                         .HasColumnType("int");
 
-                    b.Property<int>("NbrOfTeams")
+                    b.Property<int>("LongestTeamNameLength")
                         .HasColumnType("int");
 
                     b.Property<string>("TxtChances")
@@ -287,21 +311,6 @@ namespace BetValue.Migrations
                     b.Property<string>("Year")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("aGoals")
-                        .HasColumnType("int");
-
-                    b.Property<int>("hGoals")
-                        .HasColumnType("int");
-
-                    b.Property<int>("maxTeamNameLength")
-                        .HasColumnType("int");
-
-                    b.Property<int>("nbrOfGames")
-                        .HasColumnType("int");
-
-                    b.Property<int>("omg")
-                        .HasColumnType("int");
 
                     b.HasKey("Id");
 
@@ -318,36 +327,28 @@ namespace BetValue.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<int?>("LeagueModelId")
-                        .HasColumnType("int");
-
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Pitch")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("ShortNames")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("LeagueModelId");
 
                     b.ToTable("Teams");
                 });
 
             modelBuilder.Entity("BetValue.Models.BetModel", b =>
                 {
-                    b.HasOne("BetValue.Models.GameModel", "Game")
+                    b.HasOne("BetValue.Models.OddsModel", "Odds")
                         .WithMany()
-                        .HasForeignKey("GameId")
+                        .HasForeignKey("OddsId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("Game");
+                    b.Navigation("Odds");
                 });
 
             modelBuilder.Entity("BetValue.Models.GameModel", b =>
@@ -360,25 +361,9 @@ namespace BetValue.Migrations
                         .WithMany()
                         .HasForeignKey("HomeTeamId");
 
-                    b.HasOne("BetValue.Models.LeagueModel", null)
-                        .WithMany("Games")
-                        .HasForeignKey("LeagueModelId");
-
-                    b.HasOne("BetValue.Models.SerieModel", "Serie")
-                        .WithMany("Games")
-                        .HasForeignKey("SerieId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("BetValue.Models.TeamModel", null)
-                        .WithMany("Games")
-                        .HasForeignKey("TeamModelId");
-
                     b.Navigation("AwayTeam");
 
                     b.Navigation("HomeTeam");
-
-                    b.Navigation("Serie");
                 });
 
             modelBuilder.Entity("BetValue.Models.LeagueModel", b =>
@@ -390,19 +375,26 @@ namespace BetValue.Migrations
                     b.Navigation("Country");
                 });
 
-            modelBuilder.Entity("BetValue.Models.SerieMemberModel", b =>
+            modelBuilder.Entity("BetValue.Models.OddsModel", b =>
                 {
-                    b.HasOne("BetValue.Models.SerieModel", "Serie")
-                        .WithMany("SerieMembers")
-                        .HasForeignKey("SerieId")
+                    b.HasOne("BetValue.Models.GameModel", "Game")
+                        .WithMany()
+                        .HasForeignKey("GameId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
+                    b.Navigation("Game");
+                });
+
+            modelBuilder.Entity("BetValue.Models.SerieMemberModel", b =>
+                {
+                    b.HasOne("BetValue.Models.SerieModel", "Serie")
+                        .WithMany()
+                        .HasForeignKey("SerieId");
+
                     b.HasOne("BetValue.Models.TeamModel", "Team")
                         .WithMany()
-                        .HasForeignKey("TeamId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("TeamId");
 
                     b.Navigation("Serie");
 
@@ -412,40 +404,12 @@ namespace BetValue.Migrations
             modelBuilder.Entity("BetValue.Models.SerieModel", b =>
                 {
                     b.HasOne("BetValue.Models.LeagueModel", "League")
-                        .WithMany("Series")
+                        .WithMany()
                         .HasForeignKey("LeagueId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.Navigation("League");
-                });
-
-            modelBuilder.Entity("BetValue.Models.TeamModel", b =>
-                {
-                    b.HasOne("BetValue.Models.LeagueModel", null)
-                        .WithMany("Teams")
-                        .HasForeignKey("LeagueModelId");
-                });
-
-            modelBuilder.Entity("BetValue.Models.LeagueModel", b =>
-                {
-                    b.Navigation("Games");
-
-                    b.Navigation("Series");
-
-                    b.Navigation("Teams");
-                });
-
-            modelBuilder.Entity("BetValue.Models.SerieModel", b =>
-                {
-                    b.Navigation("Games");
-
-                    b.Navigation("SerieMembers");
-                });
-
-            modelBuilder.Entity("BetValue.Models.TeamModel", b =>
-                {
-                    b.Navigation("Games");
                 });
 #pragma warning restore 612, 618
         }

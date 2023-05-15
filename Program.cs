@@ -8,10 +8,11 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddRazorPages();
 builder.Services.AddControllers();
 
-var connectionString = builder.Configuration.GetConnectionString("BetValueConnection");
+var connectionString = builder.Configuration.GetConnectionString("DBConnectionString");
+//var connectionString = "Server=tcp:betvalue-server.database.windows.net,1433;Initial Catalog=BetValueDB;Encrypt=True;TrustServerCertificate=False;Connection Timeout=30;Authentication='Active Directory Default'";
 builder.Services.AddDbContext<BetValueDbContext>(options => options.UseSqlServer(connectionString));
 
-builder.Services.AddScoped<ILeagueModelRepo, LeagueModelRepo>();
+//builder.Services.AddScoped<ILeagueModelRepo, LeagueModelRepo>();
 //builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
 builder.Services.AddScoped<UnitOfWork>();
 

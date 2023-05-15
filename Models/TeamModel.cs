@@ -22,5 +22,4 @@ public class TeamModel
             Pitch = "Grass";
         }
     }
-
 }
