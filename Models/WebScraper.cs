@@ -325,7 +325,7 @@
 //        //                            else year = int.Parse(endYear);
 
 //        //                            DateTime dateTime = new(year, month, day);
-
+// changes
 //        //                            GameModel newGame = new GameModel(homeTeam, awayTeam, homeGoals, awayGoals, 0, dateTime, serie);
 //        //                            newGame.CorrectOdds1 = Math.Round(1 / (double.Parse(lines[i + 2].Split("%")[0].Replace("%", "").Trim()) / 100), 2);
 //        //                            newGame.CorrectOddsX = Math.Round(1 / (double.Parse(lines[i + 2].Split("%")[1].Replace("%", "").Trim()) / 100), 2);
