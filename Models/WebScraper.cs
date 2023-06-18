@@ -1,4 +1,5 @@
-﻿using BetValue.Repos;
+
+using BetValue.Repos;
 using PuppeteerSharp;
 using System.Text;
 
@@ -654,4 +655,3 @@ namespace BetValue.Models
         }
     }
 }
-
