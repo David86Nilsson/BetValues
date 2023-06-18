@@ -4,6 +4,9 @@
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="keywords" content="Betvalues, xG, Odds, Values, Value, Bet, Compare, SPI">
+    <meta title="xG Values">
+    <meta name="description" content="Compare xG to Odds on the market">
     <title>@ViewData["Title"] - BetValue</title>
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
@@ -12,23 +15,13 @@
 <body>
     <header>
         <div class="container">   
-            <div class="row">
-                    <nav class="navbar navbar-expand-lg navbar-dark bg-primary w-100 border align-items-center align-content-start">
-
-                        <!-- The expansion button for the leagues links -->
-
-                        <div class="collapse navbar-collapse d-flex justify-content-between" id="navbarLeagues">
-                      
-                            <div>
-                                <h1 class="">B<span class="text-info">e</span>t<strong class="border">V</strong>alu<span class="text-info">e</span>s</h1>
+            <div class="row">               
+                            <div class="logo">
+                                <h1 class="text-center logo">B<span class="text-info">e</span>t<strong class="border">V</strong>alu<span class="text-info">e</span>s</h1>
                             </div>
-
-                                <!-- The search bar on the right -->
-                            <div class="form-inline my-2 my-lg-0">
-                                    <input class="form-control mr-sm-2 text-primary" id="searchBar" type="search" placeholder="Search" aria-label="Search">
-                            </div>
-                        </div>
-                    </nav>
+            </div>
+            <div class="row welcome-container">
+                <h4>Welcome to the number one site for comparing football teams xG to Odds on the market</h4>
             </div>
             <div class="row">
                 <nav class="col-12 d-flex flex-row justify-content-between">
@@ -38,6 +31,7 @@
                         <a asp-page="/Contact" class="nav-link">Contact</a>
                     </div>
                 </nav>
+
             </div>
         </div>
     </header>
@@ -48,11 +42,7 @@
         </main>
     </div>
 
-    <footer class="border-top footer text-muted">
-        <div class="container">
-            &copy; 2023 - BetValue - <a asp-area="" asp-page="/Privacy">Privacy</a>
-        </div>
-    </footer>
+    
 
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>

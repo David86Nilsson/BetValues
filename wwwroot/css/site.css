@@ -6,8 +6,15 @@ html {
   html {
     font-size: 16px;
   }
+  .big-screen-border-left{
+      border-left: 1px solid cornflowerblue;
+  }
 }
-
+nav {
+    border-top: 1px solid #e5e5e5;
+    border-bottom: 1px solid #e5e5e5;
+    margin-bottom: 3rem;
+}
 html {
   position: relative;
   min-height: 100%;
@@ -20,6 +27,16 @@ body {
 *{
     color: cornflowerblue;
     font-family: Verdana, Geneva, Tahoma, sans-serif;
+}
+a {
+    text-decoration: none;
+}
+h4 {
+    text-align: center;
+}
+h1 {
+    text-align: center;
+    font-size: 50px;
 }
 
 .headline {
@@ -45,11 +62,13 @@ body {
 
 ul {
     margin: 10px;
-    list-style: none;
 }
 
 li {
     margin: 20px;
+}
+button {
+    max-height: 3rem;
 }
 
 .italic {
@@ -105,13 +124,15 @@ li {
 }
 
 .box:hover {
-    transform: scale(1.5);
+    transform: scale(1.2);
 }
 .gameContainer {
-    transition: 0.5s;  
+    margin-top: 20px;
+    transition: 0.5s;
+    color: white;
 }
     .gameContainer:hover {
-        transform: scale(1.1);
+        transform: scale(1.05);
     }
 .chosenGameContainer {
     text-align: center;
@@ -129,9 +150,14 @@ li {
 
 }
 .leagueLink {
+    color: white;
     text-decoration: none;
-    color: black;
-    margin-bottom:50px;
+    font-size:small;
+    padding: 10px;
+    border: 2px solid white;
+    border-radius: 20px;
+    transition: 0.5s;
+    white-space: nowrap;
 }
 .green-text{
     color:lawngreen;
@@ -140,7 +166,6 @@ li {
     color: red;
 }
 #GameBox {
-    display: none;
     background-color: blue;
     color: white;
     position: fixed;
@@ -148,7 +173,7 @@ li {
     max-height: 400px;
     max-width: 100%;
     border-radius: 20px 20px 0px 0px;
-    border: 2px solid white;
+    box-shadow: 0px 0px 5px 5px #fffef0;
     overflow: auto;
     z-index: 1;
 }
@@ -156,18 +181,76 @@ li {
     padding-bottom: 10px;
 }
 .hidden {
-    display: none;
+    display: none !important;
 }
 .close-btn {
     border: 2px solid white;
-    border-radius:50%;
-    
+    border-radius: 100%;
+    max-height: 40px;
+    max-width: 40px;
 }
 #leagueList {
+    margin-top:20px;
 }
 .leagueHeadline {
     color: white;
 }
+.topBox {
+    text-align: center;
+    box-shadow: 0px 0px 5px 5px #fffef0;
+    border-radius: 20px !important;
+}
+.topBoxContainer {
+    display: flex;
+    justify-content:center;    
+    gap: 20px;
+}
+.chosenGameBorder {
+    box-shadow: 0px 0px 1px 1px #524949 !important;
+    opacity: 0.5;
+}
+.gameBorder {
+    box-shadow: 0px 0px 5px 5px #fffef0;
+    border-radius: 20px;
+}
+.margin-top {
+    margin-top: 40px;
 
-
-
+}
+.grid-container {
+    display: grid;
+    grid-template-columns: repeat(2,1fr);
+}
+.chosenCountry {
+    border: 2px solid white;
+    border-radius: 20px;
+    opacity: 0.5;
+}
+#countryList{
+    list-style-type:none;
+}
+.logo {
+    max-width: 100%;
+    max-height: 100%;
+}
+.welcome-container {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    gap: 10px;
+}
+.border-left {
+    border-left: 1px solid cornflowerblue !important;
+}
+.border-top {
+    border-top: 1px solid cornflowerblue !important;
+}
+.border-right {
+    border-right: 1px solid cornflowerblue !important;
+}
+.border-bottom {
+    border-bottom: 1px solid cornflowerblue !important;
+}
+#leagueList{
+    min-height:40px;
+}

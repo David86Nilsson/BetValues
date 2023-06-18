@@ -18,12 +18,14 @@ namespace BetValue.Models
         public int Winner { get; set; }
         public int homeCorners { get; set; }
         public int awayCorners { get; set; }
+        public int Clicked { get; set; }
         public double CorrectOdds1 { get; set; }
         public double CorrectOddsX { get; set; }
         public double CorrectOdds2 { get; set; }
         public double CorrectOdds1DNB { get; set; }
         public double CorrectOdds2DNB { get; set; }
         public string? WhatBetHasValue { get; set; }
+        public double? ValueOdds { get; set; }
         public double BetValue { get; set; }
         public bool IsPlayed { get; set; }
         public string? Pitch { get; set; }

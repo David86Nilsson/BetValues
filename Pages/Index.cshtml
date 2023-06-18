@@ -17,60 +17,81 @@
         </div>
     </div>
 </div>
-<div class="row hidden" id="page">
-    <div class="col-12 col-md-4"> 
-        <h3>Leagues</h3>
-        <div>
-            <ul class="list-group list-group-horizontal row">
-                @foreach (CountryModel country in Model.AllCountries)
-                {
-                    <li class=" col-4 box m-1 country padding-0" id="@country.Id">
-                        <span class="country padding-0"><img src="/Images/@country.ImageUrl" class="box country padding-0" id="@country.Id" /></span>
-                    </li>
-                }
-            </ul>
+<div class="row hidden container justify-content-center" id="page">
+    
+    <div class="row mb-2 topBoxContainer hidden" id="topContainer">
+        <div class="row">
+            <h3 class="text-center">Popular Games</h3>
+        </div> 
+        <div class="row topBoxContainer">
+            <div class="col-12 col-md-3" id="topFirstBox">            
+            </div>
+            <div class="col-12 col-md-3" id="topSecondBox">
+            </div>
+            <div class="col-12 col-md-3" id="topThirdBox">
+            </div>
         </div>
-
-        <div class="d-flex flex-column" id="leagueList">
-        </div>
+    </div>
+    <div class="row">
+        <div class="col-12 col-lg-4 margin-top border-top"> 
+            <h3>Leagues</h3>
+            <div class="row">
+                <ul class="d-flex flex-row" id="countryList">
+                </ul>
+            </div>
+            
+            <div class="row grid-container border-bottom" id="leagueList">
+            </div>
         
-        <div class="" id="GameBox">
-            <div class="d-flex w-100 justify-content-around">
-                <h3 class="text-white m-2"id="gameBoxTitle"></h3>     
-                <button class="btn btn-outline-primary text-danger close-btn" id="closeGameBox">X</button>              
+            <div class="hidden" id="GameBox">
+                <div class="d-flex w-100 justify-content-between">
+                    <h3 class="text-white m-2"id="gameBoxTitle"></h3>     
+                    <button class="btn btn-outline-primary text-danger close-btn" id="closeGameBox">X</button>              
+                </div>
+                <div class="" id="gameBoxTextContainer"></div>
             </div>
-            <div class="" id="gameBoxTextContainer"></div>
         </div>
-    </div>
-    <div class="col-6 col-md-4">
-        <div class="d-flex">
-        <h3>Games with values</h3>
-        <button onclick="toggleForm()" class="btn btn-outline-primary border m-2">Filter</button>
-        </div>
-        <div class="d-flex w-100 justify-content-end">
-        <form method="post" id="filterForm" style="display:none">
-            <div class="form-group">
-                <label for="inputValue">Value above:</label>
-                <input type="number" min="0" max="1.0" step="0.1" id="inputValue" asp-for="Value" class="w-auto border text-center m-1" />
-                <span asp-validation-for="Value" class="text-danger"></span>
-                <label for="inputMaxOdds">Max odds:</label>
-                <input type="number" min="0" max="10" step="0.5" id="inputMaxOdds" asp-for="MaxOdds" class="w-auto border text-center m-1" />
-                <span asp-validation-for="MaxOdds" class="text-danger"></span>
+        <div class="col-6 col-lg-4 margin-top big-screen-border-left">
+            <div class="d-flex">
+                <h3>Value Games</h3>
+                <button onclick="toggleForm()" class="btn btn-outline-primary border m-2" id="filterButton">Filter</button>
             </div>
-            <input type="submit" value="Räkna om" class="btn btn-outline-primary border" />
-        </form>
+            <div class="d-flex w-100 justify-content-end">
+                <form method="post" id="filterForm" class="hidden">
+                    <div class="form-group">
+                        <label for="inputValue">Value above:</label>
+                        <input type="number" min="0" max="1.0" step="0.1" value="0.2" id="inputValue" asp-for="Value" class="w-auto border text-center m-1" />
+                        <span asp-validation-for="Value" class="text-danger"></span>
+                        <label for="inputMaxOdds">Max odds:</label>
+                        <input type="number" min="1.5" max="10" step="0.5" value="4.0" id="inputMaxOdds" asp-for="MaxOdds" class="w-auto border text-center m-1" />
+                        <span asp-validation-for="MaxOdds" class="text-danger"></span>
+                    </div>
+    @*                <input type="submit" value="Calculate" class="btn btn-outline-primary border" />*@
+                </form>
+            </div>
+            <div id="valueGamesContainer">
+    @*        @foreach (GameModel game in Model.ValueGames)        
+            {
+                <p class="gameContainer text-white border m-1 p-3" id=@game.Id>@Html.Raw($"{game.Date.ToShortDateString()}<br />{game.HomeTeam.Name} - {game.AwayTeam.Name}<br />Value: {Math.Round(game.BetValue,2)}")</p>
+            }*@
+            </div>
         </div>
-        @foreach (GameModel game in Model.ValueGames)        
-        {
-            <p class="gameContainer text-white border m-1 p-3" id=@game.Id>@Html.Raw($"{game.Date.ToShortDateString()}<br />{game.HomeTeam.Name} - {game.AwayTeam.Name}<br />Value: {Math.Round(game.BetValue,2)}")</p>
-        }
-    </div>
-    <div class="col-6 col-md-4" id="unplayedContainer">
-        <h3>Upcoming games</h3>
-        @foreach (GameModel game in Model.UnplayedGames)
-        {
-            <p class="gameContainer border bg-light m-1 p-3 unPlayedGame" id=@game.Id>@Html.Raw($"{game.Date.ToShortDateString()}<br />{game.HomeTeam.Name} - {game.AwayTeam.Name}")</p>
-        }
+        <div class="col-6 col-lg-4 margin-top border-left">
+            <div class="d-flex">
+                <h3>Upcoming Games</h3>
+                <button onclick="toggleSearch()" class="btn btn-outline-primary border m-2" id="searchButton">Search</button>
+            </div>
+            <div>
+                <input class="w-75 border text-center m-1 hidden" id="searchBar" type="search" placeholder="Search" aria-label="Search">
+            </div>
+            <div id="unplayedContainer">
+                
+            </div>
+@*            @foreach (GameModel game in Model.UnplayedGames)
+            {
+                <p class="gameContainer border bg-light m-1 p-3 unPlayedGame" id=@game.Id>@Html.Raw($"{game.Date.ToShortDateString()}<br />{game.HomeTeam.Name} - {game.AwayTeam.Name}")</p>
+            }*@
+        </div>
     </div>
     
 </div>
