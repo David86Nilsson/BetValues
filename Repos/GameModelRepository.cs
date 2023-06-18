@@ -68,7 +68,7 @@ namespace BetValue.Repos
         }
         public async Task<GameModel?> GetGameAsync(string homeTeam, string awayTeam)
         {
-            GameModel? game = await context.Games.Include(g => g.HomeTeam).Include(g => g.AwayTeam).OrderBy(g => g.Id).LastOrDefaultAsync
+            GameModel? game = await context.Games.Include(g => g.HomeTeam).Include(g => g.AwayTeam).OrderBy(g => g.Date).LastOrDefaultAsync
             (g => homeTeam.Contains(g.HomeTeam.Name) && awayTeam.Contains(g.AwayTeam.Name));
 
             //GameModel? game = await context.Games.Include(g => g.HomeTeam).Include(g => g.AwayTeam).FirstOrDefaultAsync

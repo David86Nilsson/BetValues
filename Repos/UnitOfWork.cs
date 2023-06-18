@@ -125,6 +125,11 @@ namespace BetValue.Repos
         }
         public void Save()
         {
+            context.SaveChanges();
+        }
+        public async Task SaveAsync()
+        {
+            await context.SaveChangesAsync();
         }
     }
 }

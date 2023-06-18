@@ -11,45 +11,45 @@ namespace BetValue.Pages
 
         //public readonly IUnitOfWork uow;
 
-        public List<LeagueModel>? AllLeagues { get; set; }
-        public List<GameModel>? AllGames { get; set; }
-        public List<GameModel>? ValueGames { get; set; }
-        public List<GameModel>? UnplayedGames { get; set; }
-        public List<CountryModel>? AllCountries { get; set; }
+        public List<LeagueModel>? AllLeagues { get; set; } = new();
+        public List<GameModel>? AllGames { get; set; } = new();
+        public List<GameModel>? ValueGames { get; set; } = new();
+        public List<GameModel>? UnplayedGames { get; set; } = new();
+        public List<CountryModel>? AllCountries { get; set; } = new();
 
         [BindProperty]
         public string? Value { get; set; }
         [BindProperty]
         public string? MaxOdds { get; set; }
 
-        public IndexModel(UnitOfWork unitOfWork)
+        public IndexModel()
         {
-            this.uow = (UnitOfWork)unitOfWork;
+            //this.uow = (UnitOfWork)unitOfWork;
         }
         public async Task OnGet()
         {
-            AllLeagues = await uow.LeagueModelRepository.GetLeaguesAsync();
-            AllCountries = await uow.CountryModelRepository.GetCountriesAsync();
-            AllGames = await uow.GameModelRepository.GetUnplayedGamesWithOddsAsync();
-            ValueGames = AllGames.Where(g => g.Date >= DateTime.Now.Date && g.BetValue > 0.2).OrderBy(g => g.Date).ToList();
-            UnplayedGames = AllGames.Where(g => g.Date >= DateTime.Now.Date && g.BetValue > -10).OrderBy(g => g.Date).ToList();
+            //AllLeagues = await uow.LeagueModelRepository.GetLeaguesAsync();
+            //AllCountries = await uow.CountryModelRepository.GetCountriesAsync();
+            //AllGames = await uow.GameModelRepository.GetUnplayedGamesWithOddsAsync();
+            //ValueGames = AllGames.Where(g => g.Date >= DateTime.Now.Date && g.BetValue > 0.2).OrderBy(g => g.Date).ToList();
+            //UnplayedGames = AllGames.Where(g => g.Date >= DateTime.Now.Date && g.BetValue > -10).OrderBy(g => g.Date).ToList();
         }
         public async Task<IActionResult> OnPost()
         {
-            AllLeagues = uow.LeagueModelRepository.GetLeagues();
-            AllCountries = uow.CountryModelRepository.GetCountries();
-            AllGames = await uow.GameModelRepository.GetUnplayedGamesWithOddsAsync();
-            if (string.IsNullOrEmpty(Value))
-            {
-                Value = "0.2";
-            }
-            if (string.IsNullOrEmpty(MaxOdds))
-            {
-                MaxOdds = "10";
-            }
+            //AllLeagues = uow.LeagueModelRepository.GetLeagues();
+            //AllCountries = uow.CountryModelRepository.GetCountries();
+            //AllGames = await uow.GameModelRepository.GetUnplayedGamesWithOddsAsync();
+            //if (string.IsNullOrEmpty(Value))
+            //{
+            //    Value = "0.2";
+            //}
+            //if (string.IsNullOrEmpty(MaxOdds))
+            //{
+            //    MaxOdds = "10";
+            //}
 
-            ValueGames = AllGames.Where(g => g.Date >= DateTime.Now.Date && g.BetValue > double.Parse(Value.Replace(',', '.')) && GetValueOdds(g) <= double.Parse(MaxOdds.Replace(',', '.'))).OrderBy(g => g.Date).ToList();
-            UnplayedGames = AllGames.Where(g => g.Date >= DateTime.Now.Date && g.IsPlayed == false && g.BetValue > -10).OrderBy(g => g.Date).ToList();
+            //ValueGames = AllGames.Where(g => g.Date >= DateTime.Now.Date && g.BetValue > double.Parse(Value.Replace(',', '.')) && GetValueOdds(g) <= double.Parse(MaxOdds.Replace(',', '.'))).OrderBy(g => g.Date).ToList();
+            //UnplayedGames = AllGames.Where(g => g.Date >= DateTime.Now.Date && g.IsPlayed == false && g.BetValue > -10).OrderBy(g => g.Date).ToList();
 
             return Page();
         }
